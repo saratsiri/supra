@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Supra A90">
+  <title>2024 Toyota GR Supra MT - For Sale</title>
+  <style>
+    :root {
+      --primary: #cc0000;
+      --secondary: #8b0000;
+      --accent: #f39c12;
+      --success: #27ae60;
+      --warning: #d35400;
+      --purple: #8e44ad;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --text: #2c3e50;
+      --muted: #7f8c8d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      background: var(--bg); 
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+    
+    /* Page system */
+    .page { display: none; }
+    .page.active { display: block; }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 30px 20px 20px;
+      text-align: center;
+    }
+    .header h1 { font-size: 24px; margin-bottom: 8px; font-weight: 700; }
+    .header .subtitle { font-size: 14px; opacity: 0.95; margin-bottom: 3px; }
+    .header .price { 
+      font-size: 28px; 
+      font-weight: 800; 
+      margin-top: 12px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .header .mileage { font-size: 13px; opacity: 0.9; margin-top: 5px; }
+    
+    /* Sticky Navigation */
+    .nav-container {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .nav {
+      display: flex;
+      overflow-x: auto;
+      padding: 12px 15px;
+      gap: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav a {
+      flex-shrink: 0;
+      padding: 9px 16px;
+      background: var(--bg);
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav a:active {
+      background: var(--primary);
+      color: white;
+    }
+    
+    /* Quick stats bar */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 15px;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .stat-box {
+      text-align: center;
+      padding: 12px 8px;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+    .stat-box .value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-box .label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Image gallery */
+    .gallery {
+      padding: 15px;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .gallery-item {
+      aspect-ratio: 4/3;
+      background: var(--bg);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 13px;
+      border: 2px dashed #ddd;
+    }
+    
+    /* Sections */
+    .section {
+      margin: 15px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .section-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 15px 18px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .section-content { padding: 18px; }
+    
+    /* Info rows */
+    .info-row {
+      display: flex;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label {
+      width: 120px;
+      flex-shrink: 0;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--primary);
+    }
+    .info-value { 
+      flex: 1; 
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    /* Mod item */
+    .mod-item {
+      padding: 14px;
+      background: var(--bg);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--primary);
+    }
+    .mod-item:last-child { margin-bottom: 0; }
+    .mod-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .mod-details {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .mod-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    
+    /* Maintenance record */
+    .maintenance-record {
+      padding: 14px;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .maintenance-record:last-child { margin-bottom: 0; }
+    .record-date {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .record-mileage {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .record-work {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .record-work ul {
+      margin-top: 6px;
+      padding-left: 20px;
+    }
+    .record-work li {
+      margin-bottom: 4px;
+    }
+    
+    /* Alert boxes */
+    .alert {
+      padding: 12px 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin: 15px;
+      line-height: 1.6;
+    }
+    .alert-warning { background: #fef9e7; border-left: 4px solid var(--warning); }
+    .alert-info { background: #ebf5fb; border-left: 4px solid var(--secondary); }
+    .alert-success { background: #e8f6f3; border-left: 4px solid var(--success); }
+    .alert strong { display: block; margin-bottom: 5px; }
+    
+    /* Feature highlights */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .feature-item {
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .feature-item .icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    /* Why selling box */
+    .why-selling {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 15px;
+    }
+    .why-selling h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .why-selling p {
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.95;
+    }
+    
+    /* Contact section */
+    .contact-section {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+      margin: 15px;
+      border-radius: 16px;
+    }
+    .contact-section h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .contact-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .contact-btn {
+      padding: 12px 24px;
+      background: white;
+      color: var(--primary);
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s;
+    }
+    .contact-btn:active {
+      transform: scale(0.95);
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+    }
+    
+    /* Performance numbers */
+    .perf-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .perf-box {
+      background: white;
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+    .perf-box .number {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    .perf-box .label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="main-page" class="page active">
+  <!-- Header -->
+  <div class="header">
+    <h1>🏁 2024 Toyota GR Supra MT</h1>
+    <div class="subtitle">3.0L Inline-6 Twin-Turbo • 6-Speed Manual • Track-Focused Build</div>
+    <div class="price">฿4,700,000 (Negotiable)</div>
+    <div class="mileage">📍 Bangkok, Thailand • New MSRP: ~฿5,000,000 (before mods)</div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="quick-stats">
+    <div class="stat-box">
+      <div class="value">10,000</div>
+      <div class="label">Kilometers</div>
+    </div>
+    <div class="stat-box">
+      <div class="value">2024</div>
+      <div class="label">Model Year</div>
+    </div>
+    <div class="stat-box">
+      <div class="value">GT4-Spec</div>
+      <div class="label">Build Level</div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-container">
+    <div class="nav">
+      <a href="#overview">Overview</a>
+      <a href="#specs">Specifications</a>
+      <a href="#mods">Modifications</a>
+      <a href="#maintenance">Maintenance</a>
+      <a href="#performance">Performance</a>
+      <a href="#why">Why Selling</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+  <!-- Image Gallery Placeholder -->
+  <div class="gallery">
+    <div class="gallery-grid">
+      <div class="gallery-item">📸 Photo 1</div>
+      <div class="gallery-item">📸 Photo 2</div>
+      <div class="gallery-item">📸 Photo 3</div>
+      <div class="gallery-item">📸 Photo 4</div>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <div class="alert alert-success">
+    <strong>✅ Exceptional Condition - Zero Issues</strong>
+    First owner • 10,000 km weekend-only • Zero accidents • Zero mechanical issues • ฿875,000+ in modifications • All receipts available • First class insurance until 9/2025
+  </div>
+
+  <div class="alert alert-info">
+    <strong>💰 Exceptional Value</strong>
+    New MSRP: ~฿5,000,000 (without any modifications). This car has ฿875,000+ in professional mods, only 10,000 km, and is priced at ฿4,700,000 (negotiable). You're essentially getting a GT4-spec build for less than a stock new Supra. <strong>Price is negotiable for serious buyers.</strong>
+  </div>
+
+  <!-- Overview Section -->
+  <div id="overview" class="section">
+    <div class="section-header">🚗 Overview</div>
+    <div class="section-content">
+      <p style="font-size: 15px; line-height: 1.7; margin-bottom: 15px;">
+        This exceptionally rare 2024 Toyota GR Supra 6-Speed Manual has been meticulously transformed into a GT4-inspired track weapon while retaining full street usability. With only 10,000 km of weekend-only driving and zero accidents, this Supra features over ฿875,000 in professional suspension, chassis, and drivetrain modifications—tuned to approach GT4 Supra capabilities. Think of it as the GT3 version of the road-going Supra.
+      </p>
+      
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="icon">🔧</div>
+          <div>Professionally Tuned</div>
+        </div>
+        <div class="feature-item">
+          <div class="icon">📋</div>
+          <div>Full Service History</div>
+        </div>
+        <div class="feature-item">
+          <div class="icon">🏎️</div>
+          <div>Track Ready</div>
+        </div>
+        <div class="feature-item">
+          <div class="icon">✅</div>
+          <div>No Accidents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Specifications Section -->
+  <div id="specs" class="section">
+    <div class="section-header">📊 Specifications</div>
+    <div class="section-content">
+      <div class="info-row">
+        <div class="info-label">Engine</div>
+        <div class="info-value">BMW B58 3.0L Inline-6 Twin-Turbo</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Transmission</div>
+        <div class="info-value">6-Speed Manual (Factory MT)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Drive Type</div>
+        <div class="info-value">RWD (Rear-Wheel Drive)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Mileage</div>
+        <div class="info-value">10,000 km (Weekend drives only)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Exterior</div>
+        <div class="info-value">White</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Interior</div>
+        <div class="info-value">Hazelnut leather</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">First Owner</div>
+        <div class="info-value">Yes - Purchased new September 2024</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Insurance</div>
+        <div class="info-value">First class insurance valid until September 2025</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">VIN</div>
+        <div class="info-value">Available upon serious inquiry</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modifications Section -->
+  <div id="mods" class="section">
+    <div class="section-header">⚙️ Modifications</div>
+    <div class="section-content">
+      
+      <div class="mod-item">
+        <div class="mod-title">🏁 Suspension System (฿340,000)</div>
+        <div class="mod-details">
+          <strong>KW V4CS Coilovers</strong> (฿300,000) - Fully overhauled December 2024. Remote adjustable compression/rebound damping with cloud-connected settings. Professional corner-balanced setup.<br><br>
+          <strong>aFe Adjustable Front & Rear Sway Bars</strong> (฿40,000) - Adjustable anti-roll bars for precise handling tuning
+        </div>
+        <span class="mod-badge">GT4-Spec</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">🛑 Braking System (฿30,000)</div>
+        <div class="mod-details">
+          <strong>Dixcel Type Z Brake Pads</strong> (฿20,000) - High-performance pads front & rear. Stock pads included.<br><br>
+          <strong>Spiegel Stainless Steel Brake Lines</strong> (฿10,000) - Improved brake feel and fade resistance
+        </div>
+        <span class="mod-badge">Track Proven</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">🔧 Full Spherical Arms & Bushings (฿110,000)</div>
+        <div class="mod-details">
+          <strong>Verkline Adjustable Caster Thrust Arm</strong> (฿40,000)<br>
+          <strong>Verkline Adjustable Toe Arm</strong> (฿20,000)<br>
+          <strong>SPL Adjustable Front/Rear Sway Bar Links</strong> (฿20,000)<br>
+          <strong>Verkline Solid Bushings:</strong><br>
+          • Front lower camber arm (฿10,000)<br>
+          • Rear lower arm (฿10,000)<br>
+          • Rear knuckle (฿10,000)<br><br>
+          Complete suspension geometry control for maximum precision and responsiveness
+        </div>
+        <span class="mod-badge">Race-Spec</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">⚙️ Transmission & Drivetrain (฿120,000)</div>
+        <div class="mod-details">
+          <strong>AutoSolutions Short Shifter</strong> (฿30,000) - Reduced throw, improved feel<br>
+          <strong>Rogue Engineering Transmission Mount</strong> - Harder rubber for better shift precision<br>
+          <strong>Rogue Engineering Transmission Carrier Mount</strong> - Harder rubber<br>
+          <strong>Differential Braces</strong> (฿20,000) - Increased rigidity<br>
+          <strong>Millway Solid Subframe Bushings</strong> (฿20,000) - M-car and GT4 Supra spec<br>
+          <strong>Powerflex Engine Mount Insert</strong> - Reduced drivetrain movement
+        </div>
+        <span class="mod-badge">M-Car Spec</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">🖥️ Engine Management & Tuning (฿70,000)</div>
+        <div class="mod-details">
+          <strong>Femto Unlock CustomRomV2</strong> (฿40,000) - Ready for Rev2 upgrade. Full ECU unlock for advanced tuning.<br>
+          <strong>Bootmod3 License + Stage 2 Flash</strong> (฿20,000) - Custom maps optimized for Thailand fuel<br>
+          <strong>Catless Downpipe</strong> (฿10,000) - Improved flow and performance
+        </div>
+        <span class="mod-badge">Pro Tuned</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">⚪ Wheels & Tires (฿130,000)</div>
+        <div class="mod-details">
+          <strong>TWS T66-F 18x10.5 +31</strong> (฿90,000) - Forged wheels, 8.8kg per wheel. Significantly lighter than stock (stock: 9kg front/10kg rear for 19" wheels). Premium Japanese engineering.<br><br>
+          <strong>Yokohama AD09 275/40/R18</strong> (฿40,000) - New tires just changed. Maximum grip compound.<br><br>
+          <em>Stock 19" wheels included with sale.</em>
+        </div>
+        <span class="mod-badge">Lightweight</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">🏗️ Chassis Bracing (฿30,000)</div>
+        <div class="mod-details">
+          <strong>Cusco Underbody Brace</strong> (฿10,000) - Floor rigidity enhancement<br>
+          <strong>Kansai Service Strut Bar</strong> (฿10,000) - Front strut tower brace<br>
+          <strong>Kansai Service Tower Bar</strong> (฿10,000) - Interior cabin brace<br><br>
+          Complete chassis triangulation for maximum rigidity and handling precision
+        </div>
+        <span class="mod-badge">Reinforced</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">🎨 Interior Enhancement (฿30,000)</div>
+        <div class="mod-details">
+          <strong>Real Steering Napp Leather Steering Wheel</strong> (฿30,000) - Carbon fiber inserts, thicker grip diameter for better feel. Replaced stock two-tone hazelnut wheel.
+        </div>
+        <span class="mod-badge">Premium</span>
+      </div>
+
+      <div class="mod-item">
+        <div class="mod-title">⚡ Lightweight Battery (฿15,000)</div>
+        <div class="mod-details">
+          <strong>60Ah Lightweight Battery</strong> (฿15,000) - Only 5kg total weight (20kg lighter than stock battery). Significant front-end weight reduction improving weight distribution and handling balance. Stock battery included.
+        </div>
+        <span class="mod-badge">Weight Savings</span>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 12px; border-left: 4px solid var(--accent);">
+        <strong style="color: var(--text); font-size: 15px;">💰 Total Modifications Value: ฿875,000+</strong><br>
+        <span style="font-size: 13px; color: var(--muted); margin-top: 5px; display: block;">
+          All parts professionally installed and maintained. All receipts and documentation available.
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Maintenance History -->
+  <div id="maintenance" class="section">
+    <div class="section-header">🔧 Maintenance History</div>
+    <div class="section-content">
+      
+      <div class="maintenance-record">
+        <div class="record-date">December 2024</div>
+        <div class="record-mileage">📍 ~10,000 km</div>
+        <div class="record-work">
+          <ul>
+            <li><strong>KW V4CS Complete Overhaul</strong> - Full service and reconditioning at authorized KW service center</li>
+            <li>Professional corner balancing and alignment</li>
+            <li>All suspension settings optimized and documented</li>
+            <li>Yokohama AD09 tires installed (275/40/R18 new)</li>
+            <li>Full vehicle inspection</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="maintenance-record">
+        <div class="record-date">7,000 km Service</div>
+        <div class="record-mileage">📍 7,000 km</div>
+        <div class="record-work">
+          <ul>
+            <li>Engine oil change (5W-40 full synthetic)</li>
+            <li>Brake fluid change (high-performance fluid)</li>
+            <li>General inspection</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="maintenance-record">
+        <div class="record-date">Break-in Service</div>
+        <div class="record-mileage">📍 1,900 km</div>
+        <div class="record-work">
+          <ul>
+            <li>First oil change after break-in period</li>
+            <li>Switched to 5W-40 full synthetic oil</li>
+            <li>Initial inspection completed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="maintenance-record">
+        <div class="record-date">September 2024 - Present</div>
+        <div class="record-mileage">📍 Total: 10,000 km</div>
+        <div class="record-work">
+          <strong>Meticulous weekend-only ownership</strong><br><br>
+          • All modifications professionally installed at <strong>Elite Performance</strong><br>
+          • Oil changes performed by owner with quality synthetic oil (5W-40)<br>
+          • All other services at Elite Performance<br>
+          • Vehicle stored in climate-controlled garage between drives<br>
+          • Zero accidents, zero mechanical issues<br>
+          • Complete receipts for all ฿875,000+ in modifications<br><br>
+          <strong>Vehicle Condition:</strong> Mechanically perfect. Some operational characteristics due to race-spec modifications are easily reversible (see "Operational Characteristics" section).
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Performance Section -->
+  <div id="performance" class="section">
+    <div class="section-header">🏎️ Performance Data</div>
+    <div class="section-content">
+      <p style="font-size: 14px; margin-bottom: 15px; color: var(--muted);">
+        Tuned for handling precision and track capability rather than maximum power
+      </p>
+      
+      <div class="alert alert-info" style="margin-bottom: 15px;">
+        <strong>🏁 GT4 Philosophy</strong>
+        This build prioritizes chassis dynamics, suspension geometry, and drivetrain precision over raw horsepower. The goal was to create a Supra that handles like a GT4 race car while maintaining street usability—think GT3 RS rather than Turbo S. Stage 2 tune provides ample power (400+ hp) with exceptional throttle response and linear delivery optimized for driver engagement.
+      </div>
+
+      <div style="background: var(--bg); padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+        <strong style="display: block; margin-bottom: 10px; color: var(--primary);">Key Performance Characteristics:</strong>
+        <ul style="margin-left: 20px; line-height: 1.8; font-size: 14px;">
+          <li><strong>Handling:</strong> Near GT4-spec suspension geometry with fully adjustable KW V4CS and spherical arms</li>
+          <li><strong>Weight:</strong> Significant rotating mass reduction (8.8kg per wheel savings)</li>
+          <li><strong>Precision:</strong> Solid bushings throughout eliminate deflection for race-car feedback</li>
+          <li><strong>Braking:</strong> Fade-free track performance with high-temp pads and steel lines</li>
+          <li><strong>Power:</strong> Stage 2 tune with catless downpipe, linear power delivery</li>
+          <li><strong>Shifter Feel:</strong> Short shifter + solid mounts = telepathic gearbox</li>
+        </ul>
+      </div>
+
+      <div style="background: #e8f6f3; padding: 15px; border-radius: 12px; border-left: 4px solid var(--success);">
+        <strong style="color: var(--text); display: block; margin-bottom: 8px;">🎯 The Result</strong>
+        <span style="font-size: 14px; line-height: 1.7;">
+          A manually-shifted Supra that rivals GT4 chassis dynamics while being daily-driveable. This isn't a drag strip build—it's engineered for apex speed, driver confidence, and pure driving pleasure. The 6-speed manual makes this one of the most engaging Supras available.
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Selling Section -->
+  <div id="why" class="why-selling">
+    <h3>💭 Why I'm Selling</h3>
+    <p>
+      I purchased this car new in September 2024 with the vision of creating Thailand's ultimate GT4-inspired street Supra. After investing ฿875,000+ in carefully selected modifications and only 10,000 km of weekend drives, I've realized this isn't the right car for my driving style and usage patterns.
+    </p>
+    <p style="margin-top: 12px;">
+      <strong>The honest reasons:</strong><br>
+      • High insurance costs for a car I rarely drive<br>
+      • I prefer lighter, lower-powered cars (planning to get an MX-5)<br>
+      • The car simply sits unused most of the time—it deserves an owner who will drive it
+    </p>
+    <p style="margin-top: 12px;">
+      This Supra is mechanically perfect with zero issues. However, the race-spec modifications create some operational characteristics: differential whine from the diff braces, slight vibration from the stiffer engine mount insert, and a firmer ride from the KW V4CS setup. <strong>This is not a luxury GT car—it's a track-focused machine that happens to be street legal.</strong>
+    </p>
+    <p style="margin-top: 12px;">
+      <strong>Good news:</strong> These NVH characteristics are easily reversible! The diff brace and engine mount insert can be removed in under 30 minutes, restoring stock noise levels while keeping all the suspension and handling upgrades. I chose to keep them installed for maximum performance, but the next owner can easily dial in their preferred comfort-to-performance balance.
+    </p>
+    <p style="margin-top: 12px;">
+      Looking for a serious enthusiast who wants a GT4-spec manual Supra and understands that proper performance modifications come with trade-offs. If you want a quiet, comfortable cruiser, this isn't your car. If you want the most capable street Supra in Thailand with full documentation and zero issues, here it is.
+    </p>
+    <p style="margin-top: 12px;">
+      <strong>Pricing & Negotiation:</strong> New Supra MSRP is around ฿5,000,000 without modifications. With ฿875,000+ in mods and only 10,000 km, asking ฿4,700,000 is exceptional value. <strong>Price is negotiable for serious buyers.</strong> I'm currently looking to sell the car as-is with all modifications, but may consider parting out components later if the right buyer isn't found.
+    </p>
+  </div>
+
+  <!-- Operational Characteristics -->
+  <div class="alert alert-info" style="margin: 15px;">
+    <strong>🔊 Race-Spec Operational Characteristics (Easily Reversible)</strong>
+    Due to the comprehensive chassis modifications, this car exhibits typical race-car behaviors:<br><br>
+    • <strong>Differential whine:</strong> From differential braces. Easily removable if desired (simple bolt-on part).<br>
+    • <strong>Engine vibration:</strong> From Powerflex mount insert. Can be removed in 15 minutes if preferred.<br>
+    • <strong>Stiffer ride:</strong> KW V4CS set for performance. Fully adjustable damping if desired.<br>
+    • <strong>Mechanical feedback:</strong> You'll feel and hear what the car is doing—this is intentional for track driving.<br><br>
+    <strong>Important:</strong> All modifications are 100% reversible. Stock wheels (19x9 front: 9kg, 19x10 rear: 10kg) and other stock parts included. The diff brace and engine mount insert can be easily removed to restore stock NVH levels, though not recommended for track use due to the B58's high torque.
+  </div>
+
+  <!-- What's Included -->
+  <div class="section">
+    <div class="section-header">📦 What's Included</div>
+    <div class="section-content">
+      <div class="info-row">
+        <div class="info-label">Documentation</div>
+        <div class="info-value">Original purchase invoice, all modification receipts (฿875,000+), Elite Performance service records, owner-maintained oil change records, alignment specs, suspension setup sheets, KW setup documentation</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Stock Parts</div>
+        <div class="info-value">All stock components included: stock wheels (19x9 front/19x10 rear), stock brake pads, stock battery, and all other original parts carefully stored. All modifications are reversible.</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Accessories</div>
+        <div class="info-value">Femto Unlock installed (cannot be transferred - tied to ECU), suspension setup documentation, alignment reports, car cover</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Keys</div>
+        <div class="info-value">1 key fob (BMW parts shortage from COVID - second key was never delivered)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Import Status</div>
+        <div class="info-value">Imported vehicle - no manufacturer warranty available. Car is in perfect mechanical condition with zero issues.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms -->
+  <div class="alert alert-warning">
+    <strong>⚠️ Important Notes</strong>
+    Serious enthusiasts only—this is a race-spec build, not a comfort cruiser. Test drives available after verification of funds/financing. Pre-purchase inspection welcome at buyer's expense (recommend Elite Performance or any qualified shop). No trades. Clean title, first owner, zero accidents, zero mechanical issues. First class insurance valid until September 2025 (transferable). Imported vehicle with no manufacturer warranty, but car is in perfect mechanical condition. All stock parts included—every modification is reversible. Can provide comprehensive modification documentation, alignment specs, and suspension setup sheets.
+  </div>
+
+  <!-- Contact Section -->
+  <div id="contact" class="contact-section">
+    <h3>📱 Contact Information</h3>
+    <p style="margin-bottom: 20px; font-size: 14px; opacity: 0.95;">
+      Available for viewing by appointment. Located in Bangkok.<br>
+      <strong>Price is negotiable - serious buyers welcome!</strong>
+    </p>
+    <div class="contact-buttons">
+      <a href="tel:+66XXXXXXXXX" class="contact-btn">
+        📞 Call
+      </a>
+      <a href="https://line.me/ti/p/YOUR_LINE_ID" class="contact-btn">
+        💬 LINE
+      </a>
+      <a href="/cdn-cgi/l/email-protection#0b72647e79256e666a62674b6e736a667b676e25686466" class="contact-btn">
+        ✉️ Email
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align: center; padding: 30px 20px; color: var(--muted); font-size: 13px;">
+    <p>This listing created on December 16, 2024</p>
+    <p style="margin-top: 8px;">🏁 Built with passion, driven with pride</p>
+  </div>
+
+</div>
+
+<!-- Back to Top Button -->
+<div class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+  ↑
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Smooth scroll for navigation
+document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Show/hide back to top button
+window.addEventListener('scroll', function() {
+  const backToTop = document.getElementById('backToTop');
+  if (window.scrollY > 300) {
+    backToTop.classList.add('visible');
+  } else {
+    backToTop.classList.remove('visible');
+  }
+});
+
+// Highlight active section in nav
+window.addEventListener('scroll', function() {
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav a');
+  
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+  
+  navLinks.forEach(link => {
+    link.style.background = 'var(--bg)';
+    link.style.color = 'var(--text)';
+    if (link.getAttribute('
