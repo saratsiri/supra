@@ -148,6 +148,18 @@
       color: var(--muted);
       font-size: 11px;
       border: 2px dashed #ccc;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
     
     /* Sections */
@@ -318,6 +330,39 @@
     .back-to-top.visible {
       opacity: 1;
     }
+    
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      font-weight: 300;
+      z-index: 10000;
+    }
   </style>
 </head>
 <body>
@@ -367,19 +412,37 @@
   <!-- Image Gallery -->
   <div class="gallery">
     <div class="gallery-grid">
-      <div class="gallery-item">📸 1</div>
-      <div class="gallery-item">📸 2</div>
-      <div class="gallery-item">📸 3</div>
-      <div class="gallery-item">📸 4</div>
-      <div class="gallery-item">📸 5</div>
-      <div class="gallery-item">📸 6</div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="photo1.jpg" alt="Supra Photo 1" style="display:none;">
+        📸 1
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="photo2.jpg" alt="Supra Photo 2" style="display:none;">
+        📸 2
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="photo3.jpg" alt="Supra Photo 3" style="display:none;">
+        📸 3
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="photo4.jpg" alt="Supra Photo 4" style="display:none;">
+        📸 4
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="photo5.jpg" alt="Supra Photo 5" style="display:none;">
+        📸 5
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="photo6.jpg" alt="Supra Photo 6" style="display:none;">
+        📸 6
+      </div>
     </div>
   </div>
 
   <!-- Alert -->
   <div class="alert alert-success" style="margin: 10px;">
     <strong>✅ Exceptional Condition</strong>
-    First owner • Sep 2024 • 10,000 km weekend-only • Zero accidents • Zero issues • ฿875K+ mods • All receipts • First class insurance til 9/2025
+    First owner • Sep 2024 • 10,000 km weekend-only • Zero accidents • Zero issues • ฿875K+ mods • First class insurance til 9/2025
   </div>
 
   <div class="alert alert-info" style="margin: 10px;">
@@ -615,7 +678,7 @@
       <div class="mod-item">
         <div class="mod-title">Bootmod3 Stage 2 Flash (฿20K)</div>
         <div class="mod-detail">
-          Custom maps optimized for Thailand fuel • 400+ hp linear delivery
+          OTS Stage 2 91 octane map • 400+ hp linear delivery
         </div>
       </div>
 
@@ -656,7 +719,7 @@
       <div class="mod-item">
         <div class="mod-title">60Ah Lightweight Battery (฿15K)</div>
         <div class="mod-detail">
-          Only 5kg (20kg lighter than stock) • Front weight reduction • Improves balance • Stock battery included
+          Only 5kg (20kg lighter than stock) • Front weight reduction • Improves balance
         </div>
       </div>
 
@@ -669,7 +732,7 @@
 
       <div class="alert alert-warning">
         <strong>💰 Total Mods: ฿875,000+</strong>
-        All parts professionally installed at Elite Performance. All receipts available.
+        All parts professionally installed at Elite Performance.
       </div>
 
     </div>
@@ -716,7 +779,7 @@
       <div class="info-row">
         <div class="info-label">Records</div>
         <div class="info-value">
-          Complete documentation • All ฿875K+ in receipts • Alignment specs • Suspension setup sheets
+          Service documentation • Alignment specs • Suspension setup sheets
         </div>
       </div>
 
@@ -726,7 +789,7 @@
   <!-- Operational Characteristics -->
   <div class="alert alert-info" style="margin: 10px;">
     <strong>🔊 Race-Spec Characteristics (Easily Reversible)</strong>
-    Diff whine from braces (bolt-on, removable) • Slight vibration from mount insert (15-min removal) • Stiff ride from KW (fully adjustable). All 100% reversible. Stock wheels, battery, and parts included. The diff brace & mount insert can be removed to restore stock NVH while keeping all handling upgrades. Not recommended for track due to B58's high torque, but option exists.
+    Diff whine from braces (bolt-on, removable) • Slight vibration from mount insert (15-min removal) • Stiff ride from KW (fully adjustable). All 100% reversible. Stock wheels and parts included. The diff brace & mount insert can be removed to restore stock NVH while keeping all handling upgrades. Not recommended for track due to B58's high torque, but option exists.
   </div>
 
   <!-- Why Selling Section -->
@@ -752,11 +815,11 @@
     <div class="section-content">
       <div class="info-row">
         <div class="info-label">Docs</div>
-        <div class="info-value">Purchase invoice, all ฿875K+ receipts, Elite Performance records, oil change logs, alignment specs, KW setup docs</div>
+        <div class="info-value">Purchase invoice, service records, alignment specs, KW setup docs</div>
       </div>
       <div class="info-row">
         <div class="info-label">Stock Parts</div>
-        <div class="info-value">Stock wheels (19x9/19x10), stock brake pads, stock battery, all original parts • All mods reversible</div>
+        <div class="info-value">Stock wheels (19x9/19x10), stock brake pads • All mods reversible</div>
       </div>
       <div class="info-row">
         <div class="info-label">Accessories</div>
@@ -779,10 +842,10 @@
       <strong>Price negotiable for serious buyers</strong>
     </p>
     <div class="contact-buttons">
-      <a href="tel:+66818138386" class="contact-btn">
+      <a href="tel:+66818138386" class="contact-btn" target="_blank" rel="noopener noreferrer">
         📞 Call
       </a>
-      <a href="https://line.me/ti/p/B38y82eIQK" class="contact-btn">
+      <a href="https://line.me/ti/p/B38y82eIQK" class="contact-btn" target="_blank" rel="noopener noreferrer">
         💬 LINE
       </a>
     </div>
@@ -795,12 +858,47 @@
 
 </div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <!-- Back to Top Button -->
 <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
   ↑
 </div>
 
 <script>
+// Lightbox functions
+function openLightbox(element) {
+  const img = element.querySelector('img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  
+  lightboxImg.src = img.src;
+  lightboxImg.alt = img.alt;
+  lightbox.classList.add('active');
+  
+  // Prevent body scroll when lightbox is open
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  lightbox.classList.remove('active');
+  
+  // Restore body scroll
+  document.body.style.overflow = '';
+}
+
+// Close lightbox on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeLightbox();
+  }
+});
+
 // Smooth scroll for navigation
 document.querySelectorAll('.nav a').forEach(link => {
   link.addEventListener('click', function(e) {
