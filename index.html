@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Supra MT">
-  <title>2024 Toyota GR Supra MT - For Sale</title>
+  <title>2024 Toyota GR Supra MT - ขายรถ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #cc0000;
@@ -20,7 +23,6 @@
       --text: #2c3e50;
       --muted: #7f8c8d;
       
-      /* Category colors */
       --suspension-start: #27ae60;
       --suspension-end: #2ecc71;
       --brakes-start: #d35400;
@@ -36,16 +38,52 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
       background: var(--bg); 
       color: var(--text);
       font-size: 15px;
-      line-height: 1.4;
+      line-height: 1.5;
       padding-bottom: 60px;
     }
     
     .page { display: none; }
     .page.active { display: block; }
+    
+    /* Language Toggle - Large & Prominent */
+    .lang-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 1001;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
+      50% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7); }
+    }
+    .lang-toggle:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+    .lang-toggle:active {
+      transform: translateY(0);
+    }
+    .lang-flag {
+      font-size: 22px;
+    }
     
     /* Header */
     .header {
@@ -64,7 +102,6 @@
     }
     .header .mileage { font-size: 12px; opacity: 0.9; margin-top: 4px; }
     
-    /* Sticky Navigation */
     .nav-container {
       position: sticky;
       top: 0;
@@ -97,7 +134,6 @@
       color: white;
     }
     
-    /* Quick stats bar */
     .quick-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -127,7 +163,6 @@
       letter-spacing: 0.5px;
     }
     
-    /* Image gallery */
     .gallery {
       padding: 10px;
       background: white;
@@ -162,7 +197,6 @@
       left: 0;
     }
     
-    /* Sections */
     .section {
       margin: 10px;
       background: var(--card);
@@ -178,7 +212,6 @@
     }
     .section-content { padding: 14px; }
     
-    /* Color-coded section headers */
     #suspension .section-header { background: linear-gradient(135deg, var(--suspension-start), var(--suspension-end)); }
     #brakes .section-header { background: linear-gradient(135deg, var(--brakes-start), var(--brakes-end)); }
     #chassis .section-header { background: linear-gradient(135deg, var(--chassis-start), var(--chassis-end)); }
@@ -187,7 +220,6 @@
     #wheels .section-header { background: linear-gradient(135deg, var(--wheels-start), var(--wheels-end)); }
     #overview .section-header, #specs .section-header, #service .section-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
     
-    /* Info rows */
     .info-row {
       display: flex;
       padding: 8px 0;
@@ -207,7 +239,6 @@
       line-height: 1.4;
     }
     
-    /* Mod item */
     .mod-item {
       padding: 10px;
       background: var(--bg);
@@ -228,7 +259,6 @@
       line-height: 1.5;
     }
     
-    /* Alert boxes */
     .alert {
       padding: 12px;
       border-radius: 10px;
@@ -251,7 +281,6 @@
       border-color: var(--success);
     }
     
-    /* Why selling box */
     .why-selling {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -271,7 +300,6 @@
     }
     .why-selling p:last-child { margin-bottom: 0; }
     
-    /* Contact section */
     .contact-section {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
@@ -307,7 +335,6 @@
       transform: scale(0.95);
     }
     
-    /* Back to top button */
     .back-to-top {
       position: fixed;
       bottom: 15px;
@@ -331,7 +358,6 @@
       opacity: 1;
     }
     
-    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -363,49 +389,111 @@
       font-weight: 300;
       z-index: 10000;
     }
+    
+    /* Language-specific content */
+    body.lang-en [lang="en"] { display: inline; }
+    body.lang-en [lang="th"] { display: none; }
   </style>
 </head>
-<body>
+<body class="lang-th">
+
+<!-- Language Toggle Button -->
+<button class="lang-toggle" onclick="toggleLanguage()">
+  <span class="lang-flag">🇬🇧</span>
+  <span lang="th">English</span>
+  <span lang="en">ภาษาไทย</span>
+</button>
 
 <div id="main-page" class="page active">
   <!-- Header -->
   <div class="header">
     <h1>🏁 2024 Toyota GR Supra MT</h1>
-    <div class="subtitle">3.0L B58 Twin-Turbo • 6-Speed Manual • GT4-Inspired Build</div>
-    <div class="price">฿4,700,000 (Negotiable)</div>
-    <div class="mileage">📍 Bangkok • New MSRP: ~฿5M (before mods)</div>
+    <div class="subtitle">
+      <span lang="th">3.0L B58 Twin-Turbo • เกียร์ธรรมดา 6 สปีด • สเปค GT4</span>
+      <span lang="en">3.0L B58 Twin-Turbo • 6-Speed Manual • GT4-Inspired Build</span>
+    </div>
+    <div class="price">
+      <span lang="th">฿4,700,000 (ต่อรองได้)</span>
+      <span lang="en">฿4,700,000 (Negotiable)</span>
+    </div>
+    <div class="mileage">
+      <span lang="th">📍 กรุงเทพฯ • ราคารถใหม่: ~฿5M (ก่อนแต่ง)</span>
+      <span lang="en">📍 Bangkok • New MSRP: ~฿5M (before mods)</span>
+    </div>
   </div>
 
   <!-- Quick Stats -->
   <div class="quick-stats">
     <div class="stat-box">
       <div class="value">10,000</div>
-      <div class="label">Kilometers</div>
+      <div class="label">
+        <span lang="th">กม.</span>
+        <span lang="en">KM</span>
+      </div>
     </div>
     <div class="stat-box">
       <div class="value">2024</div>
-      <div class="label">Model Year</div>
+      <div class="label">
+        <span lang="th">ปี</span>
+        <span lang="en">YEAR</span>
+      </div>
     </div>
     <div class="stat-box">
       <div class="value">฿875K+</div>
-      <div class="label">In Mods</div>
+      <div class="label">
+        <span lang="th">ค่าแต่ง</span>
+        <span lang="en">MODS</span>
+      </div>
     </div>
   </div>
 
   <!-- Navigation -->
   <div class="nav-container">
     <div class="nav">
-      <a href="#overview">Overview</a>
-      <a href="#specs">Specs</a>
-      <a href="#suspension">Suspension</a>
-      <a href="#brakes">Brakes</a>
-      <a href="#chassis">Chassis</a>
-      <a href="#drivetrain">Drivetrain</a>
-      <a href="#engine">Engine</a>
-      <a href="#wheels">Wheels</a>
-      <a href="#service">Service</a>
-      <a href="#why">Why Selling</a>
-      <a href="#contact">Contact</a>
+      <a href="#overview">
+        <span lang="th">ภาพรวม</span>
+        <span lang="en">Overview</span>
+      </a>
+      <a href="#specs">
+        <span lang="th">สเปค</span>
+        <span lang="en">Specs</span>
+      </a>
+      <a href="#suspension">
+        <span lang="th">โช๊ค</span>
+        <span lang="en">Suspension</span>
+      </a>
+      <a href="#brakes">
+        <span lang="th">เบรก</span>
+        <span lang="en">Brakes</span>
+      </a>
+      <a href="#chassis">
+        <span lang="th">โครง</span>
+        <span lang="en">Chassis</span>
+      </a>
+      <a href="#drivetrain">
+        <span lang="th">ส่งกำลัง</span>
+        <span lang="en">Drivetrain</span>
+      </a>
+      <a href="#engine">
+        <span lang="th">เครื่อง</span>
+        <span lang="en">Engine</span>
+      </a>
+      <a href="#wheels">
+        <span lang="th">ล้อ</span>
+        <span lang="en">Wheels</span>
+      </a>
+      <a href="#service">
+        <span lang="th">ซ่อมบำรุง</span>
+        <span lang="en">Service</span>
+      </a>
+      <a href="#why">
+        <span lang="th">ทำไมขาย</span>
+        <span lang="en">Why Selling</span>
+      </a>
+      <a href="#contact">
+        <span lang="th">ติดต่อ</span>
+        <span lang="en">Contact</span>
+      </a>
     </div>
   </div>
 
@@ -441,125 +529,210 @@
 
   <!-- Alert -->
   <div class="alert alert-success" style="margin: 10px;">
-    <strong>✅ Exceptional Condition</strong>
-    First owner • Sep 2024 • 10,000 km weekend-only • Zero accidents • Zero issues • ฿875K+ mods • First class insurance til 9/2025
+    <strong lang="th">✅ สภาพยอดเยี่ยม</strong>
+    <strong lang="en">✅ Exceptional Condition</strong>
+    <br>
+    <span lang="th">เจ้าของคนแรก • ก.ย. 2024 • 10,000 กม. ขับวันหยุดอย่างเดียว • ไม่เคยชน • ไม่มีปัญหา • แต่งมากกว่า ฿875K • ประกันชั้น 1 ถึง ก.ย. 2025</span>
+    <span lang="en">First owner • Sep 2024 • 10,000 km weekend-only • Zero accidents • Zero issues • ฿875K+ mods • First class insurance til 9/2025</span>
   </div>
 
   <div class="alert alert-info" style="margin: 10px;">
-    <strong>💰 Value Proposition</strong>
-    New MSRP: ~฿5M (no mods). This car: ฿875K+ pro mods, 10K km, asking ฿4.7M (negotiable). GT4-spec build for less than stock price.
+    <strong lang="th">💰 คุ้มค่าสุดๆ</strong>
+    <strong lang="en">💰 Value Proposition</strong>
+    <br>
+    <span lang="th">ราคารถใหม่: ~฿5M (ไม่แต่ง). รถคันนี้: แต่งมากกว่า ฿875K, 10K กม., ขาย ฿4.7M (ต่อรองได้). สเปค GT4 ในราคาถูกกว่ารถสต็อก</span>
+    <span lang="en">New MSRP: ~฿5M (no mods). This car: ฿875K+ pro mods, 10K km, asking ฿4.7M (negotiable). GT4-spec build for less than stock price.</span>
   </div>
 
   <!-- Overview Section -->
   <div id="overview" class="section">
-    <div class="section-header">🚗 Overview</div>
+    <div class="section-header">
+      <span lang="th">🚗 ภาพรวม</span>
+      <span lang="en">🚗 Overview</span>
+    </div>
     <div class="section-content">
       <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
-        Rare 2024 GR Supra 6-speed manual transformed into GT4-inspired track weapon. ฿875K+ in professional suspension, chassis, and drivetrain mods. Only 10,000 km weekend-only, zero accidents. Think GT3 version of the Supra—tuned for handling precision, not just power.
+        <span lang="th">Supra 2024 เกียร์ธรรมดา 6 สปีด หายากมาก ถูกพัฒนาเป็นรถสนามสเปค GT4 แต่ยังใช้บนถนนได้ปกติ. แต่งระบบกันสะเทือน โครง และส่งกำลังมากกว่า ฿875K วิ่งเพียง 10,000 กม. วันหยุดเท่านั้น ไม่เคยชน คิดว่าเป็นเวอร์ชั่น GT3 ของ Supra—เน้นความแม่นยำในการจับโค้งมากกว่าแรงม้า</span>
+        <span lang="en">Rare 2024 GR Supra 6-speed manual transformed into GT4-inspired track weapon. ฿875K+ in professional suspension, chassis, and drivetrain mods. Only 10,000 km weekend-only, zero accidents. Think GT3 version of the Supra—tuned for handling precision, not just power.</span>
       </p>
       
       <div class="alert alert-info">
-        <strong>🏁 GT4 Philosophy</strong>
-        Prioritizes chassis dynamics, suspension geometry, drivetrain precision over raw HP. GT4-spec handling with street usability. Stage 2 tune (400+ hp) with linear delivery optimized for driver engagement.
+        <strong lang="th">🏁 แนวคิด GT4</strong>
+        <strong lang="en">🏁 GT4 Philosophy</strong>
+        <br>
+        <span lang="th">เน้นพลวัตโครงสร้าง เรขาคณิตโช๊ค ความแม่นยำในการส่งกำลัง มากกว่าแรงม้าสูงสุด. จับโค้งสเปค GT4 แต่ใช้บนถนนได้. แรงม้ากว่า 400+ แบบเส้นตรง เพื่อความตื่นเต้นในการขับขี่</span>
+        <span lang="en">Prioritizes chassis dynamics, suspension geometry, drivetrain precision over raw HP. GT4-spec handling with street usability. Stage 2 tune (400+ hp) with linear delivery optimized for driver engagement.</span>
       </div>
     </div>
   </div>
 
   <!-- Specifications Section -->
   <div id="specs" class="section">
-    <div class="section-header">📊 Specifications</div>
+    <div class="section-header">
+      <span lang="th">📊 ข้อมูลจำเพาะ</span>
+      <span lang="en">📊 Specifications</span>
+    </div>
     <div class="section-content">
       <div class="info-row">
-        <div class="info-label">Engine</div>
+        <div class="info-label">
+          <span lang="th">เครื่องยนต์</span>
+          <span lang="en">Engine</span>
+        </div>
         <div class="info-value">BMW B58 3.0L I6 Twin-Turbo</div>
       </div>
       <div class="info-row">
-        <div class="info-label">Trans</div>
-        <div class="info-value">6-Speed Manual (Factory MT)</div>
+        <div class="info-label">
+          <span lang="th">เกียร์</span>
+          <span lang="en">Trans</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">เกียร์ธรรมดา 6 สปีด (จากโรงงาน)</span>
+          <span lang="en">6-Speed Manual (Factory MT)</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Drive</div>
+        <div class="info-label">
+          <span lang="th">ขับเคลื่อน</span>
+          <span lang="en">Drive</span>
+        </div>
         <div class="info-value">RWD</div>
       </div>
       <div class="info-row">
-        <div class="info-label">Mileage</div>
-        <div class="info-value">10,000 km (Weekend drives only)</div>
+        <div class="info-label">
+          <span lang="th">เลขไมล์</span>
+          <span lang="en">Mileage</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">10,000 กม. (ขับวันหยุดเท่านั้น)</span>
+          <span lang="en">10,000 km (Weekend drives only)</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Exterior</div>
-        <div class="info-value">White</div>
+        <div class="info-label">
+          <span lang="th">สีภายนอก</span>
+          <span lang="en">Exterior</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">ขาว</span>
+          <span lang="en">White</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Interior</div>
-        <div class="info-value">Hazelnut leather</div>
+        <div class="info-label">
+          <span lang="th">สีภายใน</span>
+          <span lang="en">Interior</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">หนังสีเฮเซลนัท</span>
+          <span lang="en">Hazelnut leather</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Owner</div>
-        <div class="info-value">First owner • Purchased new Sep 2024</div>
+        <div class="info-label">
+          <span lang="th">เจ้าของ</span>
+          <span lang="en">Owner</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">เจ้าของคนแรก • ซื้อใหม่ ก.ย. 2024</span>
+          <span lang="en">First owner • Purchased new Sep 2024</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Insurance</div>
-        <div class="info-value">First class valid til Sep 2025</div>
+        <div class="info-label">
+          <span lang="th">ประกัน</span>
+          <span lang="en">Insurance</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">ประกันชั้น 1 ถึง ก.ย. 2025</span>
+          <span lang="en">First class valid til Sep 2025</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Keys</div>
-        <div class="info-value">1 key fob (BMW COVID parts shortage)</div>
+        <div class="info-label">
+          <span lang="th">กุญแจ</span>
+          <span lang="en">Keys</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">1 รีโมท (BMW ขาดแคลนอะไหล่จาก COVID)</span>
+          <span lang="en">1 key fob (BMW COVID parts shortage)</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Import</div>
-        <div class="info-value">No manufacturer warranty • Perfect condition</div>
+        <div class="info-label">
+          <span lang="th">นำเข้า</span>
+          <span lang="en">Import</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">ไม่มีการรับประกันจากผู้ผลิต • สภาพสมบูรณ์แบบ</span>
+          <span lang="en">No manufacturer warranty • Perfect condition</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Film</div>
-        <div class="info-value">Vkool top spec window film installed</div>
+        <div class="info-label">
+          <span lang="th">ฟิล์ม</span>
+          <span lang="en">Film</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">ติด Vkool สเปคสูงสุด</span>
+          <span lang="en">Vkool top spec window film installed</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Suspension Section -->
   <div id="suspension" class="section">
-    <div class="section-header">🏁 Suspension & Arms (฿450K)</div>
+    <div class="section-header">
+      <span lang="th">🏁 ระบบกันสะเทือนและแขวน (฿450K)</span>
+      <span lang="en">🏁 Suspension & Arms (฿450K)</span>
+    </div>
     <div class="section-content">
       
       <div class="mod-item">
         <div class="mod-title">KW V4CS Coilovers (฿300K)</div>
         <div class="mod-detail">
-          Overhauled Dec 2024 • Remote adjustable compression/rebound • Cloud-connected settings • Professional corner-balanced • GT4-spec geometry
+          <span lang="th">โอเวอร์ฮอลธ.ค. 2024 • ปรับความแข็งรีโมท • ตั้งค่าผ่านคลาวด์ • ปรับน้ำหนักมุมโดยมืออาชีพ • เรขาคณิตสเปค GT4</span>
+          <span lang="en">Overhauled Dec 2024 • Remote adjustable compression/rebound • Cloud-connected settings • Professional corner-balanced • GT4-spec geometry</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">aFe Adjustable Sway Bars (฿40K)</div>
         <div class="mod-detail">
-          Front & rear adjustable anti-roll bars for precise tuning
+          <span lang="th">Anti-roll bar ปรับได้ทั้งหน้าและหลัง สำหรับปรับแต่งความแม่นยำ</span>
+          <span lang="en">Front & rear adjustable anti-roll bars for precise tuning</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Verkline Adjustable Caster Thrust Arm (฿40K)</div>
         <div class="mod-detail">
-          Spherical bearings • Adjustable caster for turn-in precision
+          <span lang="th">ลูกหมากทรงกลม • ปรับ caster ได้เพื่อการเลี้ยวที่แม่นยำ</span>
+          <span lang="en">Spherical bearings • Adjustable caster for turn-in precision</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Verkline Adjustable Toe Arm (฿20K)</div>
         <div class="mod-detail">
-          Rear toe adjustment • Spherical joints
+          <span lang="th">ปรับโท้หลังได้ • ข้อต่อทรงกลม</span>
+          <span lang="en">Rear toe adjustment • Spherical joints</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">SPL Front/Rear Sway Bar Links (฿20K)</div>
         <div class="mod-detail">
-          Adjustable spherical endlinks both ends
+          <span lang="th">ลิงค์สเวย์บาร์ทรงกลมปรับได้ทั้งสองด้าน</span>
+          <span lang="en">Adjustable spherical endlinks both ends</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Verkline Solid Bushings (฿30K)</div>
         <div class="mod-detail">
-          Front lower camber arm (฿10K) • Rear lower arm (฿10K) • Rear knuckle (฿10K) • Eliminates deflection for race-car feedback
+          <span lang="th">แขนแคมเบอร์ล่างหน้า (฿10K) • แขนล่างหลัง (฿10K) • ข้อเข่าหลัง (฿10K) • กำจัดการโก่งเพื่อความรู้สึกแบบรถแข่ง</span>
+          <span lang="en">Front lower camber arm (฿10K) • Rear lower arm (฿10K) • Rear knuckle (฿10K) • Eliminates deflection for race-car feedback</span>
         </div>
       </div>
 
@@ -568,20 +741,25 @@
 
   <!-- Brakes Section -->
   <div id="brakes" class="section">
-    <div class="section-header">🛑 Braking System (฿30K)</div>
+    <div class="section-header">
+      <span lang="th">🛑 ระบบเบรก (฿30K)</span>
+      <span lang="en">🛑 Braking System (฿30K)</span>
+    </div>
     <div class="section-content">
       
       <div class="mod-item">
         <div class="mod-title">Dixcel Type Z Brake Pads (฿20K)</div>
         <div class="mod-detail">
-          High-performance pads front & rear • Track-tested fade-free • Stock pads included
+          <span lang="th">ผ้าเบรกประสิทธิภาพสูงหน้าและหลัง • ทดสอบในสนามแล้วไม่เฟด • แถมผ้าเบรกสต็อก</span>
+          <span lang="en">High-performance pads front & rear • Track-tested fade-free • Stock pads included</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Spiegel Stainless Steel Brake Lines (฿10K)</div>
         <div class="mod-detail">
-          Improved brake feel and fade resistance
+          <span lang="th">ปรับปรุงความรู้สึกเบรกและความทนทานต่อการเฟด</span>
+          <span lang="en">Improved brake feel and fade resistance</span>
         </div>
       </div>
 
@@ -590,27 +768,33 @@
 
   <!-- Chassis Section -->
   <div id="chassis" class="section">
-    <div class="section-header">🏗️ Chassis Bracing (฿30K)</div>
+    <div class="section-header">
+      <span lang="th">🏗️ โครงเสริม (฿30K)</span>
+      <span lang="en">🏗️ Chassis Bracing (฿30K)</span>
+    </div>
     <div class="section-content">
       
       <div class="mod-item">
         <div class="mod-title">Cusco Underbody Brace (฿10K)</div>
         <div class="mod-detail">
-          Floor rigidity enhancement
+          <span lang="th">เสริมความแข็งแรงพื้นรถ</span>
+          <span lang="en">Floor rigidity enhancement</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Kansai Service Strut Bar (฿10K)</div>
         <div class="mod-detail">
-          Front strut tower brace
+          <span lang="th">คานเสริมหัวเสาโช๊คหน้า</span>
+          <span lang="en">Front strut tower brace</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Kansai Service Tower Bar (฿10K)</div>
         <div class="mod-detail">
-          Interior cabin brace • Complete chassis triangulation
+          <span lang="th">คานเสริมภายในห้องโดยสาร • โครงสามเหลี่ยมสมบูรณ์</span>
+          <span lang="en">Interior cabin brace • Complete chassis triangulation</span>
         </div>
       </div>
 
@@ -619,48 +803,57 @@
 
   <!-- Drivetrain Section -->
   <div id="drivetrain" class="section">
-    <div class="section-header">⚙️ Transmission & Drivetrain (฿120K)</div>
+    <div class="section-header">
+      <span lang="th">⚙️ เกียร์และส่งกำลัง (฿120K)</span>
+      <span lang="en">⚙️ Transmission & Drivetrain (฿120K)</span>
+    </div>
     <div class="section-content">
       
       <div class="mod-item">
         <div class="mod-title">AutoSolutions Short Shifter (฿30K)</div>
         <div class="mod-detail">
-          Reduced throw • Improved feel • Telepathic shifts
+          <span lang="th">ระยะโยกสั้นลง • ความรู้สึกดีขึ้น • เปลี่ยนเกียร์แม่นยำมาก</span>
+          <span lang="en">Reduced throw • Improved feel • Telepathic shifts</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Rogue Engineering Trans Mount</div>
         <div class="mod-detail">
-          Harder rubber for better shift precision
+          <span lang="th">ยางแข็งกว่าเพื่อความแม่นยำในการเปลี่ยนเกียร์ที่ดีขึ้น</span>
+          <span lang="en">Harder rubber for better shift precision</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Rogue Engineering Carrier Mount</div>
         <div class="mod-detail">
-          Harder rubber for drivetrain rigidity
+          <span lang="th">ยางแข็งกว่าเพื่อความแข็งแรงของระบบส่งกำลัง</span>
+          <span lang="en">Harder rubber for drivetrain rigidity</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Differential Braces (฿20K)</div>
         <div class="mod-detail">
-          Increased diff rigidity • Prevents bolt failure under high torque
+          <span lang="th">เพิ่มความแข็งแรงของเฟือง • ป้องกันสลักเกลียวหักภายใต้แรงบิดสูง</span>
+          <span lang="en">Increased diff rigidity • Prevents bolt failure under high torque</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Millway Solid Subframe Bushings (฿20K)</div>
         <div class="mod-detail">
-          M-car and GT4 Supra spec • Eliminates subframe movement
+          <span lang="th">สเปค M-car และ GT4 Supra • กำจัดการเคลื่อนที่ของ subframe</span>
+          <span lang="en">M-car and GT4 Supra spec • Eliminates subframe movement</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Powerflex Engine Mount Insert</div>
         <div class="mod-detail">
-          Reduced drivetrain movement • Trade-off: slight vibration (easily removable)
+          <span lang="th">ลดการเคลื่อนที่ของระบบส่งกำลัง • ข้อแลกเปลี่ยน: สั่นเล็กน้อย (ถอดออกได้ง่าย)</span>
+          <span lang="en">Reduced drivetrain movement • Trade-off: slight vibration (easily removable)</span>
         </div>
       </div>
 
@@ -669,33 +862,42 @@
 
   <!-- Engine Section -->
   <div id="engine" class="section">
-    <div class="section-header">🏎️ Engine & Tuning (฿70K)</div>
+    <div class="section-header">
+      <span lang="th">🏎️ เครื่องยนต์และปรับแต่ง (฿70K)</span>
+      <span lang="en">🏎️ Engine & Tuning (฿70K)</span>
+    </div>
     <div class="section-content">
       
       <div class="mod-item">
         <div class="mod-title">Femto Unlock CustomRomV2 (฿40K)</div>
         <div class="mod-detail">
-          Ready for Rev2 • Full ECU unlock for advanced tuning • Tied to ECU (cannot transfer)
+          <span lang="th">พร้อมอัพเกรด Rev2 • ปลดล็อค ECU เต็มรูปแบบ • ผูกกับ ECU (โอนไม่ได้)</span>
+          <span lang="en">Ready for Rev2 • Full ECU unlock for advanced tuning • Tied to ECU (cannot transfer)</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Bootmod3 Stage 2 Flash (฿20K)</div>
         <div class="mod-detail">
-          OTS Stage 2 91 octane map • 400+ hp linear delivery
+          <span lang="th">แมพ OTS Stage 2 91 ออกเทน • แรงม้ากว่า 400+ แบบเส้นตรง</span>
+          <span lang="en">OTS Stage 2 91 octane map • 400+ hp linear delivery</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Catless Downpipe (฿10K)</div>
         <div class="mod-detail">
-          Improved flow and performance
+          <span lang="th">ปรับปรุงการไหลและประสิทธิภาพ</span>
+          <span lang="en">Improved flow and performance</span>
         </div>
       </div>
 
       <div class="alert alert-success">
-        <strong>💡 Tuning Philosophy</strong>
-        Stage 2 provides ample power (400+ hp) with exceptional throttle response. Focus on linear delivery for driver engagement, not dyno numbers.
+        <strong lang="th">💡 ปรัชญาการปรับแต่ง</strong>
+        <strong lang="en">💡 Tuning Philosophy</strong>
+        <br>
+        <span lang="th">Stage 2 ให้แรงม้าเพียงพอ (400+ hp) พร้อมการตอบสนองคันเร่งที่ยอดเยี่ยม เน้นการส่งกำลังแบบเส้นตรงเพื่อความตื่นเต้นในการขับขี่ ไม่ใช่เลขไดโนสูงสุด</span>
+        <span lang="en">Stage 2 provides ample power (400+ hp) with exceptional throttle response. Focus on linear delivery for driver engagement, not dyno numbers.</span>
       </div>
 
     </div>
@@ -703,47 +905,50 @@
 
   <!-- Wheels & Other Section -->
   <div id="wheels" class="section">
-    <div class="section-header">⚪ Wheels, Battery & Interior (฿175K)</div>
+    <div class="section-header">
+      <span lang="th">⚪ ล้อ, แบตเตอรี่ และภายใน (฿175K)</span>
+      <span lang="en">⚪ Wheels, Battery & Interior (฿175K)</span>
+    </div>
     <div class="section-content">
       
       <div class="mod-item">
         <div class="mod-title">TWS T66-F 18x10.5 +31 (฿90K)</div>
         <div class="mod-detail">
-          Forged wheels, 8.8kg per wheel • Stock: 9kg front/10kg rear (19" wheels) • Massive rotating mass reduction • Stock 19" wheels included
+          <span lang="th">ล้อปลอม 8.8 กก./วง • สต็อก: 9 กก. หน้า/10 กก. หลัง (ล้อ 19") • ลดน้ำหนักมวลหมุนมหาศาล • แถมล้อสต็อก 19"</span>
+          <span lang="en">Forged wheels, 8.8kg per wheel • Stock: 9kg front/10kg rear (19" wheels) • Massive rotating mass reduction • Stock 19" wheels included</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Yokohama AD09 275/40/R18 (฿40K)</div>
         <div class="mod-detail">
-          New tires just changed • Maximum grip compound
+          <span lang="th">ยางใหม่เพิ่งเปลี่ยน • คอมปาวด์กริปสูงสุด</span>
+          <span lang="en">New tires just changed • Maximum grip compound</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">60Ah Lightweight Battery (฿15K)</div>
         <div class="mod-detail">
-          Only 5kg (20kg lighter than stock) • Front weight reduction • Improves balance
+          <span lang="th">เพียง 5 กก. (เบากว่าสต็อก 20 กก.) • ลดน้ำหนักหน้า • ปรับปรุงความสมดุล</span>
+          <span lang="en">Only 5kg (20kg lighter than stock) • Front weight reduction • Improves balance</span>
         </div>
       </div>
 
       <div class="mod-item">
         <div class="mod-title">Real Steering Napp Leather Wheel (฿30K)</div>
         <div class="mod-detail">
-          Carbon fiber inserts • Thicker grip • Replaced stock two-tone hazelnut wheel
-        </div>
-      </div>
-
-      <div class="mod-item">
-        <div class="mod-title">VKool Window Film (Top Spec)</div>
-        <div class="mod-detail">
-          Premium VKool tint • Heat rejection • UV protection • Full car coverage
+          <span lang="th">ตัดคาร์บอนไฟเบอร์ • จับหนาขึ้น • เปลี่ยนพวงมาลัยสองสีสต็อก</span>
+          <span lang="en">Carbon fiber inserts • Thicker grip • Replaced stock two-tone hazelnut wheel</span>
         </div>
       </div>
 
       <div class="alert alert-warning">
-        <strong>💰 Total Mods: ฿875,000+</strong>
-        All parts professionally installed at Elite Performance.
+        <strong lang="th">💰 ค่าแต่งรวม: ฿875,000+</strong>
+        <strong lang="en">💰 Total Mods: ฿875,000+</strong>
+        <br>
+        <span lang="th">ติดตั้งโดยมืออาชีพที่ Elite Performance</span>
+        <span lang="en">All parts professionally installed at Elite Performance.</span>
       </div>
 
     </div>
@@ -751,46 +956,66 @@
 
   <!-- Service History Section -->
   <div id="service" class="section">
-    <div class="section-header">🔧 Service & Maintenance</div>
+    <div class="section-header">
+      <span lang="th">🔧 ประวัติการซ่อมบำรุง</span>
+      <span lang="en">🔧 Service & Maintenance</span>
+    </div>
     <div class="section-content">
       
       <div class="alert alert-success" style="margin-bottom: 10px;">
-        <strong>✅ Meticulously Maintained</strong>
-        Weekend-only ownership • Zero accidents • Zero issues • Garage kept
+        <strong lang="th">✅ ดูแลอย่างพิถีพิถัน</strong>
+        <strong lang="en">✅ Meticulously Maintained</strong>
+        <br>
+        <span lang="th">ขับเฉพาะวันหยุด • ไม่เคยชน • ไม่มีปัญหา • เก็บในโรงรถ</span>
+        <span lang="en">Weekend-only ownership • Zero accidents • Zero issues • Garage kept</span>
       </div>
 
       <div class="info-row">
         <div class="info-label">Break-in</div>
         <div class="info-value">
-          1,900 km: First oil change to 5W-40 synthetic
+          <span lang="th">1,900 กม.: เปลี่ยนน้ำมันเครื่องครั้งแรก เป็น 5W-40 สังเคราะห์</span>
+          <span lang="en">1,900 km: First oil change to 5W-40 synthetic</span>
         </div>
       </div>
 
       <div class="info-row">
         <div class="info-label">7,000 km</div>
         <div class="info-value">
-          Oil change (5W-40) • Brake fluid change
+          <span lang="th">เปลี่ยนน้ำมันเครื่อง (5W-40) • เปลี่ยนน้ำมันเบรก</span>
+          <span lang="en">Oil change (5W-40) • Brake fluid change</span>
         </div>
       </div>
 
       <div class="info-row">
-        <div class="info-label">Dec 2024</div>
+        <div class="info-label">
+          <span lang="th">ธ.ค. 2024</span>
+          <span lang="en">Dec 2024</span>
+        </div>
         <div class="info-value">
-          KW V4CS full overhaul • Corner balancing • New AD09 tires • Alignment
+          <span lang="th">โอเวอร์ฮอล KW V4CS เต็มรูปแบบ • ปรับน้ำหนักมุม • ยางใหม่ AD09 • ตั้งศูนย์</span>
+          <span lang="en">KW V4CS full overhaul • Corner balancing • New AD09 tires • Alignment</span>
         </div>
       </div>
 
       <div class="info-row">
-        <div class="info-label">Services</div>
+        <div class="info-label">
+          <span lang="th">บริการ</span>
+          <span lang="en">Services</span>
+        </div>
         <div class="info-value">
-          All mods installed at Elite Performance • Oil changes by owner • Climate-controlled garage
+          <span lang="th">แต่งทั้งหมดที่ Elite Performance • เปลี่ยนน้ำมันโดยเจ้าของ • เก็บในห้องปรับอากาศ</span>
+          <span lang="en">All mods installed at Elite Performance • Oil changes by owner • Climate-controlled garage</span>
         </div>
       </div>
 
       <div class="info-row">
-        <div class="info-label">Records</div>
+        <div class="info-label">
+          <span lang="th">เอกสาร</span>
+          <span lang="en">Records</span>
+        </div>
         <div class="info-value">
-          Service documentation • Alignment specs • Suspension setup sheets
+          <span lang="th">เอกสารการบริการ • ข้อมูลตั้งศูนย์ • เอกสารตั้งค่าโช๊ค</span>
+          <span lang="en">Service documentation • Alignment specs • Suspension setup sheets</span>
         </div>
       </div>
 
@@ -799,62 +1024,101 @@
 
   <!-- Operational Characteristics -->
   <div class="alert alert-info" style="margin: 10px;">
-    <strong>🔊 Race-Spec Characteristics (Easily Reversible)</strong>
-    Diff whine from braces (bolt-on, removable) • Slight vibration from mount insert (15-min removal) • Stiff ride from KW (fully adjustable). All 100% reversible. Stock wheels and parts included. The diff brace & mount insert can be removed to restore stock NVH while keeping all handling upgrades. Not recommended for track due to B58's high torque, but option exists.
+    <strong lang="th">🔊 ลักษณะสเปคแข่ง (กลับไปสต็อกได้ง่าย)</strong>
+    <strong lang="en">🔊 Race-Spec Characteristics (Easily Reversible)</strong>
+    <br>
+    <span lang="th">เสียงเฟืองดังจากโครงเสริม (ถอดออกได้) • สั่นเล็กน้อยจากยางเสริมเครื่อง (ถอด 15 นาที) • โช๊คแข็งจาก KW (ปรับได้). กลับไปเหมือนเดิม 100%. แถมล้อและชิ้นส่วนสต็อก. ถอดโครงเฟืองและยางเสริมเครื่องออกได้เพื่อกลับไปเสียงสต็อกแต่ยังคงการจับโค้ง. ไม่แนะนำในสนามเพราะแรงบิด B58 สูง แต่มีตัวเลือก</span>
+    <span lang="en">Diff whine from braces (bolt-on, removable) • Slight vibration from mount insert (15-min removal) • Stiff ride from KW (fully adjustable). All 100% reversible. Stock wheels and parts included. The diff brace & mount insert can be removed to restore stock NVH while keeping all handling upgrades. Not recommended for track due to B58's high torque, but option exists.</span>
   </div>
 
   <!-- Why Selling Section -->
   <div id="why" class="why-selling">
-    <h3>💭 Why I'm Selling</h3>
+    <h3>
+      <span lang="th">💭 ทำไมถึงขาย</span>
+      <span lang="en">💭 Why I'm Selling</span>
+    </h3>
     <p>
-      Purchased new Sep 2024 to create Thailand's ultimate GT4-inspired street Supra. After ฿875K+ in carefully selected mods and 10K km weekend drives, realized this isn't right for my driving style.
+      <span lang="th">ซื้อใหม่ ก.ย. 2024 เพื่อสร้าง Supra สเปค GT4 ที่ดีที่สุดในไทย หลังจากลงทุนแต่งมากกว่า ฿875K และวิ่ง 10K กม. วันหยุด ตระหนักว่ารถคันนี้ไม่เหมาะกับสไตล์การขับของผม</span>
+      <span lang="en">Purchased new Sep 2024 to create Thailand's ultimate GT4-inspired street Supra. After ฿875K+ in carefully selected mods and 10K km weekend drives, realized this isn't right for my driving style.</span>
     </p>
     <p>
-      <strong>Honest reasons:</strong> High insurance costs for rarely driven car • Prefer lighter, lower-powered cars (planning MX-5) • Car sits unused—deserves owner who will drive it.
+      <strong lang="th">เหตุผลตรงๆ:</strong><strong lang="en">Honest reasons:</strong>
+      <span lang="th"> ค่าประกันสูงสำหรับรถที่ไม่ค่อยขับ • ชอบรถเบาแรงม้าต่ำกว่า (วางแผนซื้อ MX-5) • รถนั่งเฉยๆ—สมควรได้เจ้าของที่จะขับมัน</span>
+      <span lang="en"> High insurance costs for rarely driven car • Prefer lighter, lower-powered cars (planning MX-5) • Car sits unused—deserves owner who will drive it.</span>
     </p>
     <p>
-      Mechanically perfect, zero issues. Race-spec mods create some characteristics (diff whine, slight vibration, firm ride), but ALL easily reversible. NVH can be eliminated in 30 min while keeping handling. This is track-focused, not luxury GT.
+      <span lang="th">สภาพสมบูรณ์แบบ ไม่มีปัญหา การแต่งสเปคแข่งสร้างลักษณะบางอย่าง (เสียงเฟือง สั่นเล็กน้อย โช๊คแข็ง) แต่กลับไปสต็อกได้ง่ายทั้งหมด กำจัด NVH ได้ใน 30 นาทีแต่ยังคงการจับโค้ง นี่คือรถแข่ง ไม่ใช่ GT หรูหรา</span>
+      <span lang="en">Mechanically perfect, zero issues. Race-spec mods create some characteristics (diff whine, slight vibration, firm ride), but ALL easily reversible. NVH can be eliminated in 30 min while keeping handling. This is track-focused, not luxury GT.</span>
     </p>
     <p>
-      <strong>Pricing:</strong> New Supra ~฿5M (no mods). With ฿875K+ mods, 10K km, asking ฿4.7M (negotiable). Exceptional value. <strong>Price negotiable for serious buyers.</strong> Prefer selling as-is, may part out later if needed.
+      <strong lang="th">ราคา:</strong><strong lang="en">Pricing:</strong>
+      <span lang="th"> Supra ใหม่ ~฿5M (ไม่แต่ง). แต่งมากกว่า ฿875K, 10K กม., ขาย ฿4.7M (ต่อรองได้). คุ้มค่ามาก. <strong>ต่อรองราคาได้สำหรับผู้ซื้อจริงจัง</strong> ตอนนี้อยากขายพร้อมของแต่ง แต่อาจแยกขายทีละชิ้นภายหลังถ้าไม่เจอคนที่ใช่</span>
+      <span lang="en"> New Supra ~฿5M (no mods). With ฿875K+ mods, 10K km, asking ฿4.7M (negotiable). Exceptional value. <strong>Price negotiable for serious buyers.</strong> Prefer selling as-is, may part out later if needed.</span>
     </p>
   </div>
 
   <!-- What's Included -->
   <div class="section">
-    <div class="section-header">📦 What's Included</div>
+    <div class="section-header">
+      <span lang="th">📦 ได้อะไรบ้าง</span>
+      <span lang="en">📦 What's Included</span>
+    </div>
     <div class="section-content">
       <div class="info-row">
-        <div class="info-label">Docs</div>
-        <div class="info-value">Purchase invoice, service records, alignment specs, KW setup docs</div>
+        <div class="info-label">
+          <span lang="th">เอกสาร</span>
+          <span lang="en">Docs</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">ใบซื้อขาย, บันทึกการบริการ, ข้อมูลตั้งศูนย์, เอกสาร KW</span>
+          <span lang="en">Purchase invoice, service records, alignment specs, KW setup docs</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Stock Parts</div>
-        <div class="info-value">Stock wheels (19x9/19x10), stock brake pads • All mods reversible</div>
+        <div class="info-label">
+          <span lang="th">ชิ้นส่วนสต็อก</span>
+          <span lang="en">Stock Parts</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">ล้อสต็อก (19x9/19x10), ผ้าเบรกสต็อก • แต่งทั้งหมดกลับไปสต็อกได้</span>
+          <span lang="en">Stock wheels (19x9/19x10), stock brake pads • All mods reversible</span>
+        </div>
       </div>
       <div class="info-row">
-        <div class="info-label">Accessories</div>
-        <div class="info-value">Femto Unlock (installed), setup docs, alignment reports, car cover</div>
+        <div class="info-label">
+          <span lang="th">อุปกรณ์</span>
+          <span lang="en">Accessories</span>
+        </div>
+        <div class="info-value">
+          <span lang="th">Femto Unlock (ติดแล้ว), เอกสารตั้งค่า, รายงานตั้งศูนย์, ผ้าคลุมรถ</span>
+          <span lang="en">Femto Unlock (installed), setup docs, alignment reports, car cover</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Terms -->
   <div class="alert alert-warning" style="margin: 10px;">
-    <strong>⚠️ Terms</strong>
-    Enthusiasts only—race-spec build. Test drive after funds verification. PPI welcome (Elite Performance or qualified shop). No trades. First owner, zero accidents, zero issues. First class insurance til Sep 2025. Import (no warranty), perfect condition. All documentation available.
+    <strong lang="th">⚠️ เงื่อนไข</strong>
+    <strong lang="en">⚠️ Terms</strong>
+    <br>
+    <span lang="th">สำหรับผู้ที่ชื่นชอบเท่านั้น—สเปคแข่ง. ทดลองขับหลังตรวจสอบเงิน. ตรวจสภาพได้ (Elite Performance หรือร้านที่มีคุณภาพ). ไม่รับแลก. เจ้าของคนแรก ไม่เคยชน ไม่มีปัญหา. ประกันชั้น 1 ถึง ก.ย. 2025. นำเข้า (ไม่มีการรับประกัน) สภาพสมบูรณ์แบบ. มีเอกสารครบ</span>
+    <span lang="en">Enthusiasts only—race-spec build. Test drive after funds verification. PPI welcome (Elite Performance or qualified shop). No trades. First owner, zero accidents, zero issues. First class insurance til Sep 2025. Import (no warranty), perfect condition. All documentation available.</span>
   </div>
 
   <!-- Contact Section -->
   <div id="contact" class="contact-section">
-    <h3>📱 Contact Information</h3>
+    <h3>
+      <span lang="th">📱 ติดต่อ</span>
+      <span lang="en">📱 Contact Information</span>
+    </h3>
     <p style="margin-bottom: 15px; font-size: 13px; opacity: 0.95;">
-      Bangkok • Available for viewing<br>
-      <strong>Price negotiable for serious buyers</strong>
+      <span lang="th">กรุงเทพฯ • นัดดูรถได้<br><strong>ต่อรองราคาได้สำหรับผู้ซื้อจริงจัง</strong></span>
+      <span lang="en">Bangkok • Available for viewing<br><strong>Price negotiable for serious buyers</strong></span>
     </p>
     <div class="contact-buttons">
       <a href="tel:+66818138386" class="contact-btn" target="_blank" rel="noopener noreferrer">
-        📞 Call
+        📞 <span lang="th">โทร</span><span lang="en">Call</span>
       </a>
       <a href="https://line.me/ti/p/B38y82eIQK" class="contact-btn" target="_blank" rel="noopener noreferrer">
         💬 LINE
@@ -864,7 +1128,8 @@
 
   <!-- Footer -->
   <div style="text-align: center; padding: 20px 15px; color: var(--muted); font-size: 12px;">
-    <p>Listed December 2024 • Built with passion, driven with pride</p>
+    <p lang="th">ประกาศ ธันวาคม 2024 • สร้างด้วยความหลงใหล ขับด้วยความภาคภูมิใจ</p>
+    <p lang="en">Listed December 2024 • Built with passion, driven with pride</p>
   </div>
 
 </div>
@@ -881,6 +1146,30 @@
 </div>
 
 <script>
+// Language toggle
+let currentLang = 'th'; // Default to Thai
+
+function toggleLanguage() {
+  currentLang = currentLang === 'th' ? 'en' : 'th';
+  document.body.className = 'lang-' + currentLang;
+  document.documentElement.lang = currentLang;
+  
+  // Update flag
+  const flag = document.querySelector('.lang-flag');
+  flag.textContent = currentLang === 'th' ? '🇬🇧' : '🇹🇭';
+  
+  // Save preference
+  localStorage.setItem('supraLang', currentLang);
+}
+
+// Load saved language preference
+function initLanguage() {
+  const saved = localStorage.getItem('supraLang');
+  if (saved && saved === 'en') {
+    toggleLanguage();
+  }
+}
+
 // Lightbox functions
 function openLightbox(element) {
   const img = element.querySelector('img');
@@ -891,7 +1180,6 @@ function openLightbox(element) {
   lightboxImg.alt = img.alt;
   lightbox.classList.add('active');
   
-  // Prevent body scroll when lightbox is open
   document.body.style.overflow = 'hidden';
 }
 
@@ -899,7 +1187,6 @@ function closeLightbox() {
   const lightbox = document.getElementById('lightbox');
   lightbox.classList.remove('active');
   
-  // Restore body scroll
   document.body.style.overflow = '';
 }
 
@@ -952,6 +1239,11 @@ window.addEventListener('scroll', function() {
       link.style.color = 'white';
     }
   });
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  initLanguage();
 });
 </script>
 
